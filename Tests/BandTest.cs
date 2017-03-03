@@ -29,7 +29,7 @@ namespace BandTracker
             //Arrange
             Band testBand = new Band("band");
             testBand.Save();
-
+ 
             //Act
             Band savedBand = Band.GetAll()[0];
 
