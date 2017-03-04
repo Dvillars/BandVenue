@@ -1,0 +1,15 @@
+@{
+  Layout = "Shared/_Layout.cshtml";
+}
+
+<h1>| Band @Model["Bands Object"].GetName()s Venues |</h1>
+
+@foreach (var venue in @Model["Venue List"])
+{
+<li>@venue.GetName()</li>
+}
+
+
+<span>| <a href="/">Home</a> |</span>
+<span>| <a href="/venues">View Venues</a> |</span>
+<span>| <a href="/bands">View Bands</a> |</span>

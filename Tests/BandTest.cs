@@ -29,7 +29,7 @@ namespace BandTracker
             //Arrange
             Band testBand = new Band("band");
             testBand.Save();
- 
+
             //Act
             Band savedBand = Band.GetAll()[0];
 
@@ -87,6 +87,27 @@ namespace BandTracker
             List<Band> expected = new List<Band>{testBand2};
 
             Assert.Equal(expected, allBands);
+        }
+
+        [Fact]
+        public void UpdateVenue_OneBand_BandAndNewVenue()
+        {
+            Band testBand1 = new Band("band");
+            testBand1.Save();
+
+            Venue testVenue1 = new Venue("ven1");
+            testVenue1.Save();
+
+            Venue testVenue2 = new Venue("ven2");
+            testVenue2.Save();
+
+            testBand1.AddVenue(testVenue1.GetId());
+            testBand1.UpdateVenue(testVenue1, testVenue2);
+
+            List<Venue> allVenues = testBand1.GetVenue();
+            List<Venue> expected = new List<Venue>{testVenue2};
+
+            Assert.Equal(expected, allVenues);
         }
 
         public void Dispose()

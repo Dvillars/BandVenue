@@ -148,6 +148,73 @@ namespace BandTracker
             }
         }
 
+        public List<Venue> GetVenue()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT venues.* FROM bands JOIN bands_venues ON (bands.id = bands_venues.band_id) JOIN venues ON (bands_venues.venue_id = venues.id) WHERE bands.id = @BandId;", conn);
+
+            cmd.Parameters.Add(new SqlParameter("@BandId", this.GetId().ToString()));
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            List<Venue> allVenues = new List<Venue> {};
+
+            while(rdr.Read())
+            {
+                int venueId = rdr.GetInt32(0);
+                string venueName = rdr.GetString(1);
+                Venue newVenue = new Venue(venueName, venueId);
+                allVenues.Add(newVenue);
+            }
+
+            DB.CloseSqlConnection(rdr, conn);
+
+            return allVenues;
+        }
+
+        public void AddVenue(int venueId)
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("INSERT INTO bands_venues (band_id, venue_id) VALUES (@BandId, @VenueId);", conn);
+
+            cmd.Parameters.Add(new SqlParameter("@BandId", this.GetId().ToString()));
+            cmd.Parameters.Add(new SqlParameter("@VenueId", venueId.ToString()));
+
+            cmd.ExecuteNonQuery();
+
+            if(conn != null)
+            {
+                conn.Close();
+            }
+        }
+
+        public void UpdateVenue(Venue OldVenue, Venue newVenue)
+        {
+            int OldVenueId = OldVenue.GetId();
+
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("UPDATE bands_venues SET venue_id = @NewVenueId WHERE venue_id = @OldVenueId AND band_id = @BandId;", conn);
+
+            SqlParameter bandParameter = new SqlParameter("@BandId", this.GetId());
+            SqlParameter oldVenueParameter = new SqlParameter("@OldVenueId", OldVenueId);
+            SqlParameter newVenueParameter = new SqlParameter("@NewVenueId", newVenue.GetId());
+            cmd.Parameters.Add(bandParameter);
+            cmd.Parameters.Add(oldVenueParameter);
+            cmd.Parameters.Add(newVenueParameter);
+
+            SqlDataReader rdr = null;
+            cmd.ExecuteNonQuery();
+
+            DB.CloseSqlConnection(rdr, conn);
+        }
+
+
         public static void DeleteAll()
         {
             DB.TableDeleteAll("bands");

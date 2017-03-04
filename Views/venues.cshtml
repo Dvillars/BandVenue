@@ -1,0 +1,26 @@
+@{
+  Layout = "Shared/_Layout.cshtml";
+}
+
+<h1>| Venues |</h1>
+<form action="/venues" method="post">
+  <label for="venue">Add New Venues!!</label>
+  <input id="venue" type="text" name="venue">
+  <label for="band">Add its Band!!</label>
+  <select class="btn" name="band" id="band">
+    @foreach (var band in Model["Bands"])
+    {
+      <option value="@band.GetId()">@band.GetName()</option>
+    }
+  </select>
+
+  <button class="btn" type="submit" name="button">Add!</button>
+</form>
+<ul>
+  @foreach (var venue in Model["Venues"])
+  {
+  <li><a href="/venues/@venue.GetId()">@venue.GetName() <-></a></li>
+  }
+</ul>
+<span>| <a href="/">Home</a> |</span>
+<span>| <a href="/bands">View Bands</a> |</span>
