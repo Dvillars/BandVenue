@@ -19,7 +19,7 @@
 <ul>
   @foreach (var band in Model["Bands"])
   {
-  <li><a href="/bands/@band.GetId()">@band.GetName() <-> </a></li>
+  <li><a href="/bands/@band.GetId()">@band.GetName()</a></li>
   }
 </ul>
 <span>| <a href="/">Home</a> |</span>

@@ -19,7 +19,7 @@
 <ul>
   @foreach (var venue in Model["Venues"])
   {
-  <li><a href="/venues/@venue.GetId()">@venue.GetName() <-></a></li>
+  <li><a href="/venues/@venue.GetId()">@venue.GetName()</a></li>
   }
 </ul>
 <span>| <a href="/">Home</a> |</span>
