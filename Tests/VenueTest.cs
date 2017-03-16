@@ -81,7 +81,7 @@ namespace BandTracker
             Venue testVenue2 = new Venue("ven2");
             testVenue2.Save();
 
-            testVenue1.Delete();
+            testVenue1.Delete(testVenue1.GetId());
 
             List<Venue> allVenues = Venue.GetAll();
             List<Venue> expected = new List<Venue>{testVenue2};

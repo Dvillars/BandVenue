@@ -55,17 +55,20 @@ namespace BandTracker
       return View["venue.cshtml", model];
     };
 
-    //  Get["/venues"] = _ =>
-    //   {
-    //     return View["venues.cshtml", ModelMaker()];
-    //   };
-    //
-    //   Post["/venues"] = _ =>
-    //   {
-    //     Venue newVenue = new Venue(Request.Form["venue"], Request.Form["s-id"]);
-    //     newVenue.Save();
-    //     return View["venues.cshtml", ModelMaker()];
-    //   };
+     Delete["/venues/{id}"] = parameters =>
+      {
+        Venue.Find(parameters.id).Delete(parameters.id);
+        return View["venues.cshtml", ModelMaker()];
+      };
+
+      Patch["/venues/{id}"] = parameters =>
+      {
+        Venue.Find(parameters.id).Update(Request.Form["venue"]);
+        Dictionary<string, object> model = ModelMaker();
+        model.Add("Venue Object", Venue.Find(parameters.id));
+        Console.WriteLine(Venue.Find(parameters.id));
+        return View["venue.cshtml", ModelMaker()];
+      };
     }
 
     public static Dictionary<string, object> ModelMaker()

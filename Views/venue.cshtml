@@ -4,11 +4,23 @@
 
 <h1>| Venue @Model["Venue Object"].GetName()s Bands |</h1>
 
+
+<form action="/venues/@Model["Venue Object"].GetId()" method="post">
+  <input type="hidden" name="_method" value="PATCH"/>
+  <label for="venue">Change Venue Name!!</label>
+  <input id="venue" type="text" name="venue"/>
+  <button class="btn" type="submit" >Change!</button>
+</form>
+
+<form action="/venues/@Model["Venue Object"].GetId()" method="post">
+  <input type="hidden" name="_method" value="DELETE"/>
+  <button type="submit" class="btn">Delete!</button>
+</form>
+
 @foreach (var band in @Model["Band List"])
 {
-<li>@band.GetName()</li>
+  <li>@band.GetName()</li>
 }
-
 
 <span>| <a href="/">Home</a> |</span>
 <span>| <a href="/bands">View Bands</a> |</span>
