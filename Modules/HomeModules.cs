@@ -66,8 +66,9 @@ namespace BandTracker
         Venue.Find(parameters.id).Update(Request.Form["venue"]);
         Dictionary<string, object> model = ModelMaker();
         model.Add("Venue Object", Venue.Find(parameters.id));
+        model.Add("Band List", Band.GetAll());
         Console.WriteLine(Venue.Find(parameters.id));
-        return View["venue.cshtml", ModelMaker()];
+        return View["venue.cshtml", model];
       };
     }
 
